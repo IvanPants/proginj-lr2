@@ -19,10 +19,14 @@ def get_user_by_id(db: Session, user_id: int):
 def get_user_by_second_name(db: Session, second_name: str):
     return db.query(User).filter(User.second_name == second_name).first()
 
+def get_user_by_login(db: Session, login: str):
+    return db.query(User).filter(User.login == login).first()
+
 
 def add_new_user(db: Session, user: UserSchema):
     
     hash_password = hashlib.sha256(user.password.encode()).hexdigest()
+    print(hash_password)
 
     _user = User(first_name=user.first_name, second_name=user.second_name, password=hash_password, login=user.login)
     db.add(_user)
